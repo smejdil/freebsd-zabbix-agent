@@ -29,7 +29,7 @@ vagrant ssh
 - install ssh public key to FreeBSD
 
 ```console
-cd .ssh && ssh-copy-id -i id_rsa.pub 192.168.42.100
+cd .ssh && ssh-copy-id -i id_rsa.pub root@192.168.42.100
 ```
 
 ```console
@@ -45,7 +45,7 @@ ansible "*" -i "192.168.42.100," -m ping
 ## Configure ansible on Desktop
 
 ```console
-vim /etc/ansible/hosts
+sudo vim /etc/ansible/hosts
 
 [fbsd-vagrant]
 freebsd ansible_ssh_host=192.168.42.100 ansible_ssh_user=root
@@ -57,8 +57,9 @@ ansible fbsd-vagrant -m ping
 
 ```console
 ansible-galaxy collection install community.general
+or
+ansible-galaxy collection install -r requirements.yml
 ```
-
 
 ## Install and configure zabbix_agent
 
