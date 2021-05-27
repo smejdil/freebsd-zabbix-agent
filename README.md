@@ -14,22 +14,17 @@ On Linux desktop run vagrant with VirtualBox. For test install and configure zab
 ### Installation FBSD
 
 ```console
-vagrant init freebsd/FreeBSD-13.0-RELEASE
-
-vi Vagrantfile
-config.vm.network "public_network"
-
 vagrant up
 vagrant ssh
 ```
-- configure sshd PermitRootLogin yes, set up root password and install ansible
+- Vagrant configure sshd PermitRootLogin yes and set up root password and install ansible
 
 ### Installation Desktop
 
 - install ssh public key to FreeBSD
 
 ```console
-cd .ssh && ssh-copy-id -i id_rsa.pub root@192.168.42.100
+cd ~/.ssh && ssh-copy-id -i id_rsa.pub root@192.168.42.100
 ```
 
 ```console
