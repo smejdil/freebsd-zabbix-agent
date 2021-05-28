@@ -68,6 +68,7 @@ Vagrant.configure("2") do |config|
      cp /etc/ssh/sshd_config /etc/ssh/sshd_config-orig
      sed -i -e "s/#PermitRootLogin no/PermitRootLogin yes/g" /etc/ssh/sshd_config
      /etc/rc.d/sshd restart
+     echo freebsd | pw mod user root -h 0
      ifconfig em1
   SHELL
 end
