@@ -11,13 +11,13 @@ This small project is used for install zabbix_agent5 on OS FreeBSD 13
 
 On Linux desktop run vagrant with VirtualBox. For test install and configure zabbix_agent by ansible on FreeBSD 13
 
-### Installation FBSD
+### Installation test evnviroment FreeBSD
 
 ```console
 vagrant up
 vagrant ssh
 ```
-- Vagrant configure sshd PermitRootLogin yes and set up root password and install ansible
+- Vagrant also configure sshd - PermitRootLogin yes and set up root password and install ansible package
 
 ### Installation Desktop
 
@@ -25,10 +25,11 @@ vagrant ssh
 
 ```console
 cd ~/.ssh && ssh-copy-id -i id_rsa.pub root@192.168.42.100
+cd ${HOME}/work/freebsd-zabbix-agent
 ```
-
+- test Ansible communication
 ```console
-ansible "*" -i "192.168.42.100," -m ping
+ansible "*" -i "192.168.42.100," -u root -m ping
 192.168.42.100 | SUCCESS => {
     "ansible_facts": {
         "discovered_interpreter_python": "/usr/local/bin/python3.7"
@@ -37,7 +38,7 @@ ansible "*" -i "192.168.42.100," -m ping
     "ping": "pong"
 }
 ```
-## Configure ansible on Desktop
+### Configure ansible on Desktop
 
 ```console
 sudo vim /etc/ansible/hosts
@@ -47,8 +48,12 @@ freebsd ansible_ssh_host=192.168.42.100 ansible_ssh_user=root
 
 ansible fbsd-vagrant -m ping
 ```
+Use Ansible community collection general and pkgng module
 
+- https://docs.ansible.com/ansible/latest/collections/community/general/index.html#plugins-in-community-general
 - https://docs.ansible.com/ansible/latest/collections/community/general/pkgng_module.html
+
+## Install Ansible module
 
 ```console
 ansible-galaxy collection install community.general
@@ -56,7 +61,7 @@ or
 ansible-galaxy collection install -r requirements.yml
 ```
 
-## Install and configure zabbix_agent
+## Run Ansible playbook with enviroment
 
 ```console
 ansible-playbook zabbix-agent.yml --extra-vars "ansible_fqdn=freebsd zabbix_server=zabbix.pfsense.cz"
