@@ -1,0 +1,8 @@
+---
+# zabbix server
+
+zabbix_server: 127.0.0.1
+login_user: Admin
+login_password: zabbix
+
+# EOF
