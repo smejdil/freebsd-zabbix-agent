@@ -1,6 +1,6 @@
 ## FreeBSD Zabbix Agent
 
-This small project is used for install zabbix_agent5 on OS FreeBSD 13
+This small project is used for install zabbix_agent[5|6] on OS FreeBSD 13
 
 ## Dependencies
 

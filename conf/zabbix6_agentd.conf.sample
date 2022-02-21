@@ -140,12 +140,18 @@ Server=127.0.0.1
 ##### Active checks related
 
 ### Option: ServerActive
-#	List of comma delimited IP:port (or DNS name:port) pairs of Zabbix servers and Zabbix proxies for active checks.
+#	List of comma delimited IP addresses or DNS names (address:port) pairs or clusters (address:port;address2:port) of Zabbix servers and Zabbix proxies for active checks.
 #	If port is not specified, default port is used.
+#	Cluster nodes need be separated by semicolon.
 #	IPv6 addresses must be enclosed in square brackets if port for that host is specified.
 #	If port is not specified, square brackets for IPv6 addresses are optional.
 #	If this parameter is not specified, active checks are disabled.
-#	Example: ServerActive=127.0.0.1:20051,zabbix.domain,[::1]:30051,::1,[12fc::1]
+#	Example for multiple servers:
+#		ServerActive=127.0.0.1:20051,zabbix.domain,[::1]:30051,::1,[12fc::1]
+#	Example for HA:
+#		ServerActive=zabbix.cluster.node1;zabbix.cluster.node2:20051;zabbix.cluster.node3
+#	Example for HA with two clusters and one server:
+#		ServerActive=zabbix.cluster.node1;zabbix.cluster.node2:20051,zabbix.cluster2.node1;zabbix.cluster2.node2,zabbix.domain
 #
 # Mandatory: no
 # Default:
@@ -296,15 +302,15 @@ Hostname=Zabbix server
 
 ### Option: Include
 #	You may include individual files or all files in a directory in the configuration file.
-#	Installing Zabbix will create include directory in /usr/local/etc/zabbix52, unless modified during the compile time.
+#	Installing Zabbix will create include directory in /usr/local/etc/zabbix6, unless modified during the compile time.
 #
 # Mandatory: no
 # Default:
 # Include=
 
-# Include=/usr/local/etc/zabbix52/zabbix_agentd.userparams.conf
-# Include=/usr/local/etc/zabbix52/zabbix_agentd.conf.d/
-# Include=/usr/local/etc/zabbix52/zabbix_agentd.conf.d/*.conf
+# Include=/usr/local/etc/zabbix6/zabbix_agentd.userparams.conf
+# Include=/usr/local/etc/zabbix6/zabbix_agentd.conf.d/
+# Include=/usr/local/etc/zabbix6/zabbix_agentd.conf.d/*.conf
 
 ####### USER-DEFINED MONITORED PARAMETERS #######
 
@@ -511,3 +517,14 @@ Hostname=Zabbix server
 # Mandatory: no
 # Default:
 # TLSCipherAll=
+
+####### For advanced users - TCP-related fine-tuning parameters #######
+
+## Option: ListenBacklog
+#       The maximum number of pending connections in the queue. This parameter is passed to
+#       listen() function as argument 'backlog' (see "man listen").
+#
+# Mandatory: no
+# Range: 0 - INT_MAX (depends on system, too large values may be silently truncated to implementation-specified maximum)
+# Default: SOMAXCONN (hard-coded constant, depends on system)
+# ListenBacklog=
